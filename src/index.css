@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  
+}
+
+body {
+  margin: 0;
+  background-color: #0B2434;
+  color: white;
+  padding: 20px;
+  font-family: 'Karla', sans-serif;
+  height: 100%;
+}
+
+
