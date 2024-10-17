@@ -1,15 +1,240 @@
 * {
   box-sizing: border-box;
-  
+  margin: 0;
+  padding: 0;
 }
 
 body {
   margin: 0;
-  background-color: #0B2434;
-  color: white;
-  padding: 20px;
+  color: #293264;
+  background-color: white;
   font-family: 'Karla', sans-serif;
+  font-size: 20px;
+
+}
+
+/* --------------------------------------- General ---------------------------------------------------------- */
+.question-SVG{
+  width: 20%;
+  height: 142px;
+  flex-shrink: 1;
+  z-index: -10;
+}
+
+.yellow-SVG{
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.blue-SVG{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.container{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.btn-default{
+  margin-top: 15px;
+  width: 193px;
+  height: 52px;
+  border-radius: 15px;
+  background: #4D5B9E;
+  color: white;
+  font-size: 16px;
+}
+
+/* ---------------------------------------Start Page ---------------------------------------------------------- */
+.start{
   height: 100%;
+  position: relative;
+}
+
+.container .title{
+  text-align: center;
+  font-size: 31.25px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.container .intro {
+  margin: 15px 70px;
+  text-align: center;
+  font-weight: 400;
 }
 
 
+/* ---------------------------------------Question Page ---------------------------------------------------------- */
+.questions-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  margin-bottom: 1%;
+}
+.question-obj{
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+  position: relative;
+  padding-bottom: 30px;
+}
+
+hr{
+  position: absolute;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+}
+
+.question{
+  margin-bottom: 15px;
+  line-height: 25px;
+}
+
+.answers-container{
+  width: 100%;
+}
+
+.radioButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  margin: 0 1% 0 0;
+  position: relative;
+  min-width: 20%;
+}
+
+.radioButton label,
+.radioButton input {
+  border: 1px #293264 solid;
+  border-radius: 8px;
+}
+
+.radioButton input[type="radio"] {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.011;
+  z-index: 100;
+  width: 100%;
+}
+
+.radioButton input[type="radio"]:checked + label {
+  background: #D6DBF5
+}
+
+.radioButton label {
+  cursor: pointer;
+  z-index: 90;
+  font-size: 0.875rem;
+  padding: 0.75em;
+  width: 100%;
+  margin-bottom: 10px
+}
+
+.radioButton label.correct{
+  background-color: #94D7A2;;
+}
+
+.radioButton label.incorrect{
+  background-color: #F8BCBC;
+}
+
+
+
+@media screen and (max-width: 1279px) {
+  body{
+    font-size: 0.8rem;
+  }
+  .questions-container{
+    width: 70%;
+  }
+  .radioButton label{
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+    body{
+      font-size: 0.85rem
+    }
+    .questions-container{
+      width: 75%;
+    }
+    .radioButton label{
+      font-size: 0.75rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+  body{
+    font-size: 0.85rem
+  }
+  .questions-container{
+    width: 90%;
+  }
+
+  .radioButton label{
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body{
+    font-size: 12px;
+  }
+
+  .questions-page{
+    margin-top: 20px;
+  }
+  .question{
+    margin: 0;
+  }
+  .question-obj{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 15px;
+  }
+  .answers-container{
+    width: 100%;
+  }
+
+  .radioButton{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    margin-top: 1px;
+    float: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .radioButton label{
+    font-size: 12px;
+    width: 100%;
+    margin: 0;
+    padding: 5px;
+  }
+
+  hr{
+    display: none;
+  }
+
+  .btn-default{
+    width: 120px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
