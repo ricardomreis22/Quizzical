@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import Question from "./Question";
-import Start from "./Start";
+import Question from "../src/Question";
+import Start from "../src/Start";
 import { decode } from "html-entities";
 
 export default function App() {
