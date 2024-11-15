@@ -69,23 +69,23 @@ export default function App() {
         });
     };
     // fetch only runs on change of fetchData, not on mount the component and only after 3 secs
-    if (didMount.current) {
-      setTimeout(fetchData, 3000);
-    } else didMount.current = true;
+    setTimeout(fetchData, 3000);
   }, [fetchData]);
 
   // Toggle between starting page and questions page
   function start() {
     setQuestionsComponent((prev) => !prev);
-    setFetchData((prev) => !prev);
     setButton(false);
   }
 
   function menu() {
+    setLoading(true);
+    setFetchData((prev) => !prev);
     setQuestionsComponent((prev) => !prev);
-    setQuizzicalData([]);
     setButton(false);
   }
+
+  // eu quero que o setTimeout seja feito logo apos o menu iniciar e nao quando entrar no play game
 
   // When select an answer that answer goes to selectedAnswers property on that answer Question Object
   function select(event, answer, questionObjet) {
