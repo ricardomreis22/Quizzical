@@ -22,64 +22,71 @@ export default function Question(props) {
           fill="#FFFAD1"
         />
       </svg>
-      <div className="questions-container">
-        {props.quizzicalData?.map((questionObjet, index) => {
-          return (
-            <div key={index} id={index} className="question-obj">
-              <p className="question">{questionObjet.question}</p>
-              <div className="answers-container">
-                <form>
-                  {questionObjet?.answers?.map((answer, index) => {
-                    return (
-                      <div key={index} className="radioButton">
-                        {!props.button && (
-                          <input
-                            type="radio"
-                            onClick={(event) =>
-                              props.select(event, answer, questionObjet)
-                            }
-                            id={index}
-                            name="selected"
-                          ></input>
-                        )}
-                        <label
-                          className={`radioButton-label ${
-                            answer === questionObjet.selectedAnswer
-                              ? questionObjet.isCorrect
-                              : ""
-                          } `}
-                          htmlFor={answer}
-                          id={index}
-                        >
-                          {answer}
-                        </label>
-                      </div>
-                    );
-                  })}
-                </form>
-              </div>
-              <hr></hr>
-            </div>
-          );
-        })}
-      </div>
-      <div className="button-container">
-        {props.button && (
-          <p>
-            You scored {props.count}/{props.quizzicalData.length} correct
-            answers
-          </p>
-        )}
-        {props.button ? (
-          <button className="btn-default" onClick={props.startPage}>
-            Play again
-          </button>
-        ) : (
-          <button className="btn-default" onClick={props.checkAnswers}>
-            Check Answers
-          </button>
-        )}
-      </div>
+      {props.loading ? (
+        <div>... Loading</div>
+      ) : (
+        <div>
+          <div className="questions-container">
+            {props.quizzicalData?.map((questionObjet, index) => {
+              return (
+                <div key={index} id={index} className="question-obj">
+                  <p className="question">{questionObjet.question}</p>
+                  <div className="answers-container">
+                    <form>
+                      {questionObjet?.answers?.map((answer, index) => {
+                        return (
+                          <div key={index} className="radioButton">
+                            {!props.button && (
+                              <input
+                                type="radio"
+                                onClick={(event) =>
+                                  props.select(event, answer, questionObjet)
+                                }
+                                id={index}
+                                name="selected"
+                              ></input>
+                            )}
+                            <label
+                              className={`radioButton-label ${
+                                answer === questionObjet.selectedAnswer
+                                  ? questionObjet.isCorrect
+                                  : ""
+                              } `}
+                              htmlFor={answer}
+                              id={index}
+                            >
+                              {answer}
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </form>
+                  </div>
+                  <hr></hr>
+                </div>
+              );
+            })}
+          </div>
+          <div className="button-container">
+            {props.button && (
+              <p>
+                You scored {props.count}/{props.quizzicalData.length} correct
+                answers
+              </p>
+            )}
+            {props.button ? (
+              <button className="btn-default" onClick={props.startPage}>
+                Play again
+              </button>
+            ) : (
+              <button className="btn-default" onClick={props.checkAnswers}>
+                Check Answers
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
       <svg
         className="question-SVG blue-SVG"
         xmlns="http://www.w3.org/2000/svg"

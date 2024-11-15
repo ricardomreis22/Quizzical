@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Question from "./Question";
 import Start from "./Start";
 import { decode } from "html-entities";
 
 export default function App() {
   const [questionsComponent, setQuestionsComponent] = useState(false);
-  const [fecthData, setFetchData] = useState(false);
+  const [fetchData, setFetchData] = useState(false);
   const [quizzicalData, setQuizzicalData] = useState([]);
   const [button, setButton] = useState(false);
   const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   // Helper function to shuffle an array
   function shuffle(array) {
@@ -34,9 +35,11 @@ export default function App() {
   //     item = decode(item, { level: "all" });
   //   });
   // }
+  const didMount = useRef(false);
 
   useEffect(() => {
     const fetchData = () => {
+      setLoading(true);
       fetch("https://opentdb.com/api.php?amount=5")
         .then((res) => res.json())
         .then((data) => {
@@ -59,25 +62,26 @@ export default function App() {
             };
           });
 
+          setLoading(false);
           setQuizzicalData(dataArr);
         });
     };
-    if (quizzicalData.length === 0) {
-      fetchData();
-    }
-  }, [fecthData]);
-  console.log(quizzicalData, "s");
+    // fetch only runs on change of fetchData, not on mount the component and only after 3 secs
+    if (didMount.current) {
+      setTimeout(fetchData, 3000);
+    } else didMount.current = true;
+  }, [fetchData]);
 
   // Toggle between starting page and questions page
   function start() {
     setQuestionsComponent((prev) => !prev);
+    setFetchData((prev) => !prev);
     setButton(false);
   }
 
   function menu() {
     setQuestionsComponent((prev) => !prev);
     setQuizzicalData([]);
-    setFetchData((prev) => !prev);
     setButton(false);
   }
 
@@ -119,6 +123,7 @@ export default function App() {
       {!questionsComponent && <Start startQuiz={start} />}
       {questionsComponent && (
         <Question
+          loading={loading}
           startPage={menu}
           quizzicalData={quizzicalData}
           select={select}
