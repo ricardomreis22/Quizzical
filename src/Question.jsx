@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 export default function Question(props) {
   const questionsArr = props.quizzicalData?.map((questionObj) => {
@@ -25,8 +25,8 @@ export default function Question(props) {
       {props.loading ? (
         <div>... Loading</div>
       ) : (
-        <div>
-          <div className="questions-container">
+        <div className="questions-container">
+          <div>
             {props.quizzicalData?.map((questionObjet, index) => {
               return (
                 <div key={index} id={index} className="question-obj">

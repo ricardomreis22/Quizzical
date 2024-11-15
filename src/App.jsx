@@ -29,12 +29,12 @@ export default function App() {
     return array;
   }
 
-  // // Helper function to decode the answers array
-  // function decodeArr(array) {
-  //   array.map((item) => {
-  //     item = decode(item, { level: "all" });
-  //   });
-  // }
+  // Helper function to decode the answers array
+  function decodeArr(array) {
+    return array.map((item) => {
+      return (item = decode(item, { level: "all" }));
+    });
+  }
   const didMount = useRef(false);
 
   useEffect(() => {
@@ -48,10 +48,12 @@ export default function App() {
               level: "all",
             });
 
-            const decodedAnswers = shuffle([
-              ...questionObj.incorrect_answers,
-              questionObj.correct_answer,
-            ]);
+            const decodedAnswers = decodeArr(
+              shuffle([
+                ...questionObj.incorrect_answers,
+                questionObj.correct_answer,
+              ])
+            );
 
             return {
               ...questionObj,
