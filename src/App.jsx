@@ -5,6 +5,7 @@ import { decode } from "html-entities";
 
 export default function App() {
   const [questionsComponent, setQuestionsComponent] = useState(false);
+  const [fecthData, setFetchData] = useState(false);
   const [quizzicalData, setQuizzicalData] = useState([]);
   const [button, setButton] = useState(false);
   const [count, setCount] = useState(0);
@@ -27,12 +28,12 @@ export default function App() {
     return array;
   }
 
-  // Helper function to decode the answers array
-  function decodeArr(array) {
-    array.map((item) => {
-      item = decode(item, { level: "all" });
-    });
-  }
+  // // Helper function to decode the answers array
+  // function decodeArr(array) {
+  //   array.map((item) => {
+  //     item = decode(item, { level: "all" });
+  //   });
+  // }
 
   useEffect(() => {
     const fetchData = () => {
@@ -40,30 +41,43 @@ export default function App() {
         .then((res) => res.json())
         .then((data) => {
           const dataArr = data.results?.map((questionObj) => {
+            const decodeQuestion = decode(questionObj.question, {
+              level: "all",
+            });
+
+            const decodedAnswers = shuffle([
+              ...questionObj.incorrect_answers,
+              questionObj.correct_answer,
+            ]);
+
             return {
               ...questionObj,
-              question: decode(questionObj.question, { level: "all" }),
-              answers: decode(
-                shuffle([
-                  ...questionObj.incorrect_answers,
-                  questionObj.correct_answer,
-                ])
-              ),
+              question: decodeQuestion,
+              answers: decodedAnswers,
               selectedAnswer: "",
               isCorrect: "",
             };
           });
+
           setQuizzicalData(dataArr);
         });
     };
     if (quizzicalData.length === 0) {
       fetchData();
     }
-  }, [questionsComponent]);
+  }, [fecthData]);
+  console.log(quizzicalData, "s");
 
   // Toggle between starting page and questions page
-  function changePage() {
+  function start() {
     setQuestionsComponent((prev) => !prev);
+    setButton(false);
+  }
+
+  function menu() {
+    setQuestionsComponent((prev) => !prev);
+    setQuizzicalData([]);
+    setFetchData((prev) => !prev);
     setButton(false);
   }
 
@@ -102,10 +116,10 @@ export default function App() {
   return (
     <div>
       {/* toggle between starting page and question page */}
-      {!questionsComponent && <Start startQuiz={changePage} />}
+      {!questionsComponent && <Start startQuiz={start} />}
       {questionsComponent && (
         <Question
-          startPage={changePage}
+          startPage={menu}
           quizzicalData={quizzicalData}
           select={select}
           checkAnswers={checkAnswers}
